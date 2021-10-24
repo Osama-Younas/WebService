@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2021 at 07:05 PM
+-- Generation Time: Oct 24, 2021 at 03:36 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -61,13 +61,21 @@ CREATE TABLE `merchant` (
   `Email` varchar(255) DEFAULT NULL,
   `Gender` text NOT NULL,
   `Merchant_Password` varchar(255) NOT NULL,
-  `Status` tinyint(1) DEFAULT NULL,
+  `m_status` varchar(11) DEFAULT NULL,
   `Image` blob DEFAULT NULL,
+  `Balance` int(11) NOT NULL,
   `Create_at` time NOT NULL,
   `Current_at` time NOT NULL,
   `Token` varchar(255) DEFAULT NULL,
   `Card_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `merchant`
+--
+
+INSERT INTO `merchant` (`Id`, `Name`, `Email`, `Gender`, `Merchant_Password`, `m_status`, `Image`, `Balance`, `Create_at`, `Current_at`, `Token`, `Card_id`) VALUES
+(0, 'Muhammad Usama', 'm.usamayounas669@gmail.com', 'Male', 'C123456789', NULL, NULL, 0, '00:00:00', '00:00:00', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -186,10 +194,6 @@ ALTER TABLE `card`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `merchant`
---
-
---
 -- AUTO_INCREMENT for table `response`
 --
 ALTER TABLE `response`
@@ -209,8 +213,7 @@ ALTER TABLE `secondary_user`
 -- Constraints for table `merchant`
 --
 ALTER TABLE `merchant`
-  ADD CONSTRAINT `merchant_ibfk_1` FOREIGN KEY (`Card_id`) REFERENCES `card` (`Id`)
-  ON UPDATE CASCADE;
+  ADD CONSTRAINT `merchant_ibfk_1` FOREIGN KEY (`Card_id`) REFERENCES `card` (`Id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `request`
