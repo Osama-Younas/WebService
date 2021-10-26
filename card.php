@@ -31,6 +31,7 @@ if(isset($key))//check if token is set
   {
       $get_data = mysqli_fetch_array($result, MYSQLI_ASSOC);
       $id = $get_data['Id'];
+      $email=$email['Email'];
 
     if($_SERVER["REQUEST_METHOD"] != "POST")//Check if request method is not $_POST send error message and terminate program
     {
@@ -73,6 +74,8 @@ if(isset($key))//check if token is set
            $result = mysqli_query($conn,$query) or die("SQL QUERY FAIL.");
            print_r($result);
            $q = "UPDATE `card` SET merchant_id = '{$id}'";
+           $result = mysqli_query($conn,$q) or die("SQL QUERY FAIL.");
+           $q = "UPDATE `card` SET email = '{$email}'";
            $result = mysqli_query($conn,$q) or die("SQL QUERY FAIL.");
            $message_display=array("Status_code"=>200,"Message"=>'You have successfully entered the card details you got $100 credit');
            print_r(json_encode($message_display));
