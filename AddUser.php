@@ -13,6 +13,8 @@ $db_connection = new Database();
 $conn = $db_connection->build_Connection();
 
 $data = json_decode(file_get_contents("php://input"),true);
+date_default_timezone_set("Asia/Karachi");
+
 
 $key=$data["token"];
 $name=$data["name"];
@@ -26,7 +28,7 @@ $payment_permission=$data["payment_permission"];
 
 if(isset($key))//check if token is set 
 {
-  $query ="Select * from merchant where Token ='{$key}'";
+  $query ="Select * from merchant where Token ='{$key}'AND now() <= date_add(Create_at,interval 60 minute)";
   $result = $conn->query($query);
 
   if(mysqli_num_rows($result)>0)

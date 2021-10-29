@@ -34,9 +34,7 @@ class Logout_admin extends Database
         }
     }  
  }
-
 }
-
 $Logout = new Logout_admin();
 $Logout->logout($key);
 ?>

@@ -12,19 +12,20 @@ $db_connection = new Database();
 $conn = $db_connection->build_Connection();
 
 $data = json_decode(file_get_contents("php://input"),true);
+date_default_timezone_set("Asia/Karachi");
+
 
 $key=$data["token"];
-date_default_timezone_set("Asia/Karachi");
 
 if(isset($key))//check if token is set 
 {
-  $query ="Select * from merchant where Token ='{$key}'AND now() <= date_add(Create_at,interval 60 minute)";
-  $result = $conn->query($query);
+    $query ="Select * from merchant where Token ='{$key}' AND now() <= date_add(Create_at,interval 60 minute)";
+    $result = $conn->query($query);
 
   if(mysqli_num_rows($result)>0)
   {
       $get_data = mysqli_fetch_array($result, MYSQLI_ASSOC);
-      $id = $get_data['Id'];
+      $email = $get_data['Email'];
 
     if($_SERVER["REQUEST_METHOD"] != "POST")//Check if request method is not $_POST send error message and terminate program
     {
@@ -35,17 +36,13 @@ if(isset($key))//check if token is set
     }
     else
     {
-        $query="select * from response";
+        $query="select * from card where email='{$email}'";
         $result = $conn->query($query);
         if(mysqli_num_rows($result)>0)
         {
           while  ($get_info = mysqli_fetch_array($result, MYSQLI_ASSOC))
-
-            {
-               $id=$get_info['Id'];
-               $status=$get_info['Status'];
-               $error=$get_info['error'];    
-               $message_display=array("ID"=>$id,"STATUS"=>$status,"ERROR"=>$error);
+            {  
+               $message_display=array("CARD"=>$get_info);
                print_r(json_encode($message_display));
                http_response_code(200);             
             }   

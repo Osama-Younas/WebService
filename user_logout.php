@@ -36,7 +36,7 @@ class Logout_user extends Database
  }
 
 }
-
+$key=null;
 $Logout = new Logout_user();
 $Logout->logout($key);
 ?>
